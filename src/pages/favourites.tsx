@@ -7,12 +7,14 @@ import { useEffect, useRef, useState } from 'react';
 import { RootState } from '../app/store';
 import { JsonDataMovie, MovieI } from '../type/movie';
 import { FavoriteMovies } from '../lib/movie_api';
+import { useNavigate } from 'react-router-dom';
 
 function Favourites() {
     const auth = useSelector((state: RootState) => state.auth);
     const isMounted = useRef<boolean>(false)
     const [movieKeyword, setMovieKeyword] = useState<string>('');
-    const [movies, setMovies] = useState<MovieI[]>([])
+    const [movies, setMovies] = useState<MovieI[]>([]);
+    const navigate = useNavigate();
     const options = {
         method: 'GET',
         headers: {
@@ -49,12 +51,19 @@ function Favourites() {
 
     useEffect(() => {
         if (!isMounted.current) {
-            FavoriteMovies(auth.account_id).then((res) =>{
-                refreshList(res)
-            })
-            isMounted.current = true
+            if (!isMounted.current) {
+                if (!auth.account_id) {
+                    // Redirect to /login if account_id is null
+                     navigate('/login');
+                } else {
+                    FavoriteMovies(auth.account_id).then((res) => {
+                        refreshList(res);
+                    });
+                    isMounted.current = true;
+                }
+            }
         }
-    }, []);
+    }, [auth.account_id, history]);
     return (
         <>
             <h1>Mes favoris</h1>

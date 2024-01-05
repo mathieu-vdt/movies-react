@@ -5,11 +5,13 @@ import { MovieI, JsonDataMovie } from '../type/movie.ts';
 import MovieCard from '../component/cardMovie.tsx';
 import { useSelector } from 'react-redux';
 import { RootState } from '../app/store.ts';
+import { FavoriteMovies } from '../lib/movie_api.ts';
 
 function Home() {
     
     const auth = useSelector((state: RootState) => state.auth);
     const isMounted = useRef<boolean>(false)
+    const favoritesID: (number | undefined)[] = []
     const [movieKeyword, setMovieKeyword] = useState<string>('');
     const [movies, setMovies] = useState<MovieI[]>([])
     const options = {
@@ -29,7 +31,7 @@ function Home() {
     
         for (let movieIndex in datas) {
             const movieData = datas[movieIndex];
-    
+            let isfav = false;
             if(movieData.poster_path !== null && movieData.poster_path !== ''){ // Eviter d'afficher les films sans images
                 const newMovie: MovieI = {
                     id: movieData.id,
@@ -38,6 +40,7 @@ function Home() {
                     poster_path: 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movieData.poster_path,
                     vote_average: movieData.vote_average,
                     vote_count: movieData.vote_count,
+                    is_favorite: isfav
                 };
         
                 // Add the new movie to the list
@@ -47,6 +50,15 @@ function Home() {
     }
 
     useEffect(() => {
+        if (auth.account_id) {
+            FavoriteMovies(auth.account_id).then((res) => {
+                const results = res?.results
+                for(const i in results){
+                    favoritesID.push(results[i].id)
+                }
+            });
+        }
+        
         if (!isMounted.current) {
             fetch('https://api.themoviedb.org/3/movie/popular?language=fr-FR&page=1', options)
                 .then(data => {
@@ -102,7 +114,7 @@ function Home() {
             </form>
             <div className="list-movies">
                 {movies.map(m => 
-                    <MovieCard key={m.id} movie={m} favourite={false}/>
+                    <MovieCard key={m.id} movie={m} />
                 )}
             </div>
         </>

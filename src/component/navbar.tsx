@@ -23,7 +23,7 @@ function Navbar() {
                 <li><Link to="/favourites">Mes favoris</Link></li>
                 {isAuthenticated !== null &&  isAuthenticated !== ''? (
                     // Si connecté, afficher le bouton Se déconnecter
-                    <li><button onClick={handleLogout}>Se déconnecter</button></li>
+                    <li><button onClick={handleLogout} className='logout-btn'>Se déconnecter</button></li>
                 ) : (
                     // Sinon, afficher le bouton Se connecter
                     <li><Link to="/login">Se connecter</Link></li>

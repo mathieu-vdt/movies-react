@@ -260,3 +260,9 @@ form.search-form button:hover{
 
 /* ======== END LOGIN PAGE ======== */ 
 
+.logout-btn{
+  background-color: transparent;
+  color: #b51717;
+  padding: 0;
+  border: none;
+}

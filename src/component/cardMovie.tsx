@@ -9,12 +9,11 @@ import { fetchData } from '../lib/movie_api';
 
 interface MovieCardProps {
     movie: MovieI;
-    favourite: boolean
 }
 
 function MovieCard(m: MovieCardProps) {
     const auth = useSelector((state: RootState) => state.auth);
-    const [isFavorite, setIsFavorite] = useState(m.favourite);
+    const [isFavorite, setIsFavorite] = useState(m.movie.is_favorite);
 
     const handleFavoriteClick = (id: number | undefined) => {
         setIsFavorite((prevIsFavorite) => !prevIsFavorite);
