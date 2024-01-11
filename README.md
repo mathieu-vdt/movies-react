@@ -12,11 +12,11 @@ Bienvenue dans l'application Movie App, créée par Mathieu Vidot. Cette applica
 1. Clonez le dépôt :
 
    ```bash
-   git clone https://github.com/votrenom/movie-app.git
+   git clone https://github.com/mathieu-vdt/movies-react.git
 
 2. Accédez ai répertoire du projet:
    ```bash
-   cd movie-app
+   cd movies-react
 
 3. Installez les dépendances:
    ```bash
