@@ -8,6 +8,11 @@ export interface MovieI {
     is_favorite?: boolean 
 }
 
+export interface FavoriteMovieI {
+    id?: number
+    title?: string
+}
+
 export interface JsonDataMovie {
     results: MovieI[];
 }

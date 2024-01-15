@@ -41,6 +41,7 @@ function Favourites() {
                     poster_path: 'https://www.themoviedb.org/t/p/w220_and_h330_face/' + movieData.poster_path,
                     vote_average: movieData.vote_average,
                     vote_count: movieData.vote_count,
+                    is_favorite: true
                 };
         
                 // Add the new movie to the list
@@ -69,7 +70,7 @@ function Favourites() {
             <h1>Mes favoris</h1>
             <div className="list-movies">
                 {movies.map(m => 
-                    <MovieCard key={m.id} movie={m} favourite={true}/>
+                    <MovieCard key={m.id} movie={m} />
                 )}
             </div>
         </>
